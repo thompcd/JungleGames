@@ -1,0 +1,13 @@
+{
+	"DirectionKeys": {
+		"Up": "W",
+		"Down": "S",
+		"Left": "A",
+		"Right": "D"
+	},
+	"StartSettings": {
+		"Length": 10,
+		"Speed": 2,
+		"FoodCount": 2
+	}
+}
