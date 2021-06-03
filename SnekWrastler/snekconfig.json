@@ -7,7 +7,8 @@
 	},
 	"StartSettings": {
 		"Length": 10,
-		"Speed": 2,
+		"Speed": 5,
+		"SpeedStep": 1,
 		"FoodCount": 2
 	}
 }

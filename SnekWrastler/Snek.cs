@@ -25,6 +25,7 @@ namespace SnekWrastler
         static int FoodCount;
         static int direction; //0=Up 1=Right 2=Down 3=Left
         static int speed = 1;
+        static int step = 1;
         static bool Populated = false;
         static bool Lost = false;
         static int snakeLength;
@@ -42,12 +43,13 @@ namespace SnekWrastler
             if (!Populated)
             {
                 speed = _config?.StartSettings?.Speed ?? 1;
+                step = _config?.StartSettings?.SpeedStep ?? 1;
                 FoodCount = _config?.StartSettings?.FoodCount ?? 0;
                 snakeLength = _config?.StartSettings?.Length ?? 5;
                 populateGrid();
                 currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
                 updatePos();
-                addFood();
+                addFood(FoodCount);
                 Populated = true;
             }
 
@@ -125,23 +127,28 @@ namespace SnekWrastler
             }
         }
 
-        static void addFood()
+        static void addFood(int count)
         {
             Random r = new Random();
             Cell cell;
-            while (true)
+
+            int i = 0;
+            while(i < count)
             {
-                cell = grid[r.Next(grid.GetLength(0)), r.Next(grid.GetLength(1))];
+                cell = grid[r.Next(1, grid.GetLength(0) - 1), r.Next(1, grid.GetLength(1) - 1)];
                 if (cell.val == " ")
+                {
                     cell.val = "%";
-                break;
+                    i++;
+                }
             }
         }
 
         static void eatFood()
         {
             snakeLength += 1;
-            addFood();
+            speed += step;
+            addFood(FoodCount);
         }
 
         static void goUp()
@@ -214,7 +221,7 @@ namespace SnekWrastler
                 }
                 visitCell(grid[currentCell.y, currentCell.x + 1]);
             }
-            Thread.Sleep(speed * 100);
+            Thread.Sleep(1000 / speed);
         }
 
         static void visitCell(Cell cell)

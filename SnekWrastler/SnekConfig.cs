@@ -18,6 +18,7 @@
     {
         public int Length;
         public int Speed;
+        public int SpeedStep;
         public int FoodCount;
     }
 }
